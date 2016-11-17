@@ -36,6 +36,9 @@ public class Chunk {
 	public double calculateKActivation(double negD) {
 		double activation = 0.0;
 		for (double time : recentP) {
+			if (time == 0.0) {
+				time += Double.MIN_VALUE;
+			}
 			activation += Math.pow(time, negD);
 		}
 		return activation;

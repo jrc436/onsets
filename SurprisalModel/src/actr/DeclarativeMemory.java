@@ -47,9 +47,11 @@ public class DeclarativeMemory extends HashMap<String, Chunk> {
 		if (!super.containsKey(word)) {
 			super.put(word, bwac.initChunk(word, totalTime));
 		}
+		double baseAct = getBaseActivation(word);
+		double spreadAct = getSpreadingActivation(word);
 		super.get(word).addPresentation();
 		sac.addWordToWorkingMemory(word);
-		return getBaseActivation(word) + getSpreadingActivation(word);
+		return baseAct + spreadAct;
 	}
 	public void addDelayEventToWM() {
 		sac.addWordToWorkingMemory(null);
