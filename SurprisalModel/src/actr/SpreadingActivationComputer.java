@@ -9,7 +9,7 @@ public class SpreadingActivationComputer {;
 	public static final int workingMemorySize = 5;
 	private static final double attentionalDecay = 0.5; 
 	//this doesn't have a closed form analytical solution, given wm and decay, so I solved it for wmsize = 5 and decay = 0.5
-	private static final double baseAttention = 0.507936508;
+	private static final double baseAttention = 0.507936508*workingMemorySize; //should spread the same amount over?
 	private final Queue<String> workingMemory;
 	private final PMIDict pmi;
 	
