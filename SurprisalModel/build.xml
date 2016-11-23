@@ -87,7 +87,14 @@
     </target>
     <target name="SentenceExecutor">
         <java classname="actdelay.SentenceExecutor" failonerror="true" fork="yes">
-            <arg line="-n 5 /work/research/surprisal-model/onsets/ /work/research/surprisal-model/actdelays/ -0.5 5 /work/research/surprisal-model/sentences.lm /work/data/pmi/"/>
+            <jvmarg line="-Xmx10g"/>
+            <arg line="-n 5 /work/research/onsets/dat/onsets/ /work/research/onsets/dat/actdelays/ -0.5 5 /work/research/onsets/dat/sentences.lm /work/research/onsets/dat/pmi-r/"/>
+            <classpath refid="SurprisalModel.classpath"/>
+        </java>
+    </target>
+    <target name="SentenceOptimizer">
+        <java classname="actdelay.SentenceOptimizer" failonerror="true" fork="yes">
+            <arg line="vars:[negd:-0.5:-0.05:-0.95:0.05,rt_intercept:1.0:-100.0:100.0:1.0,cutoffK:1.0:0.5:2.0:0.25,recencyK:5.0:1.0:10.0:1.0] evaluation.RsquaredRetrievalTime -n 5 /work/research/onsets/dat/onsets/ /work/research/onsets/dat/actdelays/ -0.5 5 /work/research/onsets/dat/sentences.lm /work/research/onsets/dat/pmi-r/"/>
             <classpath refid="SurprisalModel.classpath"/>
         </java>
     </target>
