@@ -1,13 +1,9 @@
 package actdelay;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
+import util.collections.GenericList;
 import util.sys.DataType;
-import util.sys.FileWritable;
 
-public class ActDelayList extends ArrayList<ActDelay> implements DataType {
+public class ActDelayList extends GenericList<ActDelay> {
 
 	public ActDelayList() {
 		super();
@@ -30,11 +26,6 @@ public class ActDelayList extends ArrayList<ActDelay> implements DataType {
 	@Override
 	public String getConstructionErrorMsg() {
 		return "ActDelayList has no starting arguments";
-	}
-
-	@Override
-	public Iterator<String> getStringIter() {
-		return FileWritable.<ActDelay, List<ActDelay>>iterBuilder(this, ActDelay::toString);
 	}
 
 	@Override

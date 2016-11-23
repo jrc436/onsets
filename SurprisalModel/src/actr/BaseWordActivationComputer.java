@@ -3,16 +3,15 @@ package actr;
 import ngrams.UnigramModel;
 
 public class BaseWordActivationComputer {
-	private static final double expYears = 15;
+	private static final double expYears = 37;
 	private static final double pcs = 0.3; //percent speaking
 	
 	private static final double speaking_rate = 196.0; //cite swbd speaking rate paper
-	private static final double words_per_ngram = 1.0; //pulled from thin air, but I believe this should always be 1.0, see speaking_rate_eff
 	private static final double year_seconds = 31557600; //365.25 * 24 * 3600	
 	//the first division is to convert it into words / second. The second division is to convert it into ngrams / second. 
 		//Realistically, as we're really using this to compute the TIME that's passing, NOT the ngrams, words_per_ngram shoudl always be 1.0
 	
-	private static final double speaking_rate_eff = (speaking_rate / 60.0) / words_per_ngram;
+	private static final double speaking_rate_eff = (speaking_rate / 60.0);
 	
 	
 	private final int k;

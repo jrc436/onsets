@@ -10,6 +10,8 @@ import data.WordStream;
 import ngrams.UnigramModel;
 import nlp.pmi.DictReformatter;
 import nlp.pmi.PMIDict;
+import optimizers.VariableName;
+import optimizers.VariableSet;
 import util.sys.LineProcessor;
 
 public class SentenceProcessor extends LineProcessor<OnsetPairList, ActDelayList> {
@@ -37,6 +39,13 @@ public class SentenceProcessor extends LineProcessor<OnsetPairList, ActDelayList
 		}
 		this.u = u;
 		this.pmi = DictReformatter.readOversizeDict(args[3]);
+	}
+	public SentenceProcessor(String input, String output, SentenceProcessor other, VariableSet vs) {
+		super(input, output, new ActDelayList());
+		this.pmi = other.pmi;
+		this.u = other.u;
+		this.negD = vs.getValue(VariableName.negd);
+		this.k = (int) Math.round(vs.getValue(VariableName.recencyK));
 	}
 	@Override
 	public int getNumFixedArgs() {
