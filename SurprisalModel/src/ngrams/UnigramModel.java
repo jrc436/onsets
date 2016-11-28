@@ -47,10 +47,8 @@ public class UnigramModel extends HashMap<String, Double> {
 		return m;
 	}
 	public Double get(String key) {
-		if (!this.containsKey(key)) {
-			return super.get(unkString);
-		}
-		return super.get(key);
+		double logprob = this.containsKey(key) ? super.get(key) : super.get(unkString);
+		return Math.pow(10, logprob);
 	}
 
 }

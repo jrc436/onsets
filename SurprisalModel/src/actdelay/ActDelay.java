@@ -1,9 +1,12 @@
 package actdelay;
 
-public class ActDelay {
+import optimizers.DoublePair;
+
+public class ActDelay extends DoublePair {
 	private final double activation;
 	private final double delay;
 	public ActDelay(double activation, double delay) {
+		super(activation, delay);
 		this.activation = activation;
 		this.delay = delay;
 	}
