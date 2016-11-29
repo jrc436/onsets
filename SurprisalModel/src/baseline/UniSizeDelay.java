@@ -5,14 +5,24 @@ public class UniSizeDelay {
 	private final int wordlength;
 	private final double delay;
 	private final String word;
-	public UniSizeDelay(String word, double unigramscore, double delay) {
+	public UniSizeDelay(String word, double delay, double unigramscore) {
 		this.unigramscore = unigramscore;
 		this.wordlength = word.length();
 		this.delay = delay;
 		this.word = word;
 	}
 	public String toString() {
-		return word+","+this.unigramscore + "," + this.wordlength + "," + this.delay;
+		//return word+","+this.unigramscore + "," + this.wordlength + "," + this.delay;
+		return this.unigramscore + "," + this.delay;
+	}
+	public double getDelay() {
+		return delay;
+	}
+	public int getLength() {
+		return wordlength;
+	}
+	public double getUni() {
+		return unigramscore;
 	}
 	public static UniSizeDelay fromString(String entry) {
 		String[] parts = entry.split(",");
