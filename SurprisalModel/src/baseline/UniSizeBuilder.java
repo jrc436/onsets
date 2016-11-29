@@ -5,10 +5,11 @@ import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.Iterator;
 
+import data.AltWordStream;
 import data.DelayEvent;
 import data.DelayWord;
+import data.IWordStream;
 import data.OnsetPairList;
-import data.WordStream;
 import ngrams.UnigramModel;
 import util.sys.LineProcessor;
 
@@ -55,7 +56,7 @@ public class UniSizeBuilder extends LineProcessor<OnsetPairList, UniSizeDelayLis
 
 	@Override
 	public void map(OnsetPairList newData, UniSizeDelayList threadAggregate) {
-		WordStream ws = new WordStream(newData);
+		IWordStream ws = new AltWordStream(newData);
 		Iterator<DelayEvent> delays = ws.getEvents();
 		while (delays.hasNext()) {
 			DelayEvent delay = delays.next();

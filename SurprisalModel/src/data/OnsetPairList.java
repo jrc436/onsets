@@ -32,6 +32,9 @@ public class OnsetPairList extends ArrayList<OnsetPair> implements DataType {
 			String[] parts = line.split(",");
 			osl.add(new OnsetPair(Double.parseDouble(parts[1]), Double.parseDouble(parts[2]), parts[0]));
 		}
+		if (osl.isEmpty()) {
+			System.err.println("WARN: File: "+f.toString()+" is empty");
+		}
 		return osl;
 	}
 	@Override

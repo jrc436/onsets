@@ -11,10 +11,13 @@ public class AltWordStream implements IWordStream {
 			throw new IllegalArgumentException();
 		}
 		delayWords = new ArrayList<DelayEvent>();
-		double lastWordEnd = 0.0;
+		double lastWordEnd = -1.0;
 		for (int i = 0; i < os.size(); i++) {
 			OnsetPair first = os.get(i);
 			//in general, we will for now just assume both affect the process the same way, but will code it so that it could be changed..
+			if (lastWordEnd == -1.0) {
+				lastWordEnd = first.getOnset();
+			}
 			double onsetDelay = first.getOnset() - lastWordEnd; //this is for computing the amount of time it took to retrieve
 			double elapsedTime = first.getEnd() - lastWordEnd; //this is for computing activation decay
 			if (first.isWord()) {
