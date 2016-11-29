@@ -101,7 +101,19 @@
     <target name="UniSizeExecutor">
         <java classname="baseline.UniSizeExecutor" failonerror="true" fork="yes">
             <jvmarg line="-Xmx15g"/>
-            <arg line="-n 5 /work/research/onsets/dat/onsets/ /work/research/onsets/dat/unisize/ /work/research/onsets/dat/sentences.lm"/>
+            <arg line="-n 5 /work/research/onsets/dat/onsets/ /work/research/onsets/dat/unilm/ /work/research/onsets/dat/sentences.lm"/>
+            <classpath refid="SurprisalModel.classpath"/>
+        </java>
+    </target>
+    <target name="LMExecutor-uni">
+        <java classname="evaluation.LMExecutor" failonerror="true" fork="yes">
+            <arg line="/work/research/onsets/dat/unilm/ /work/research/onsets/dat/unilmr/ 0.635068 -4.342923"/>
+            <classpath refid="SurprisalModel.classpath"/>
+        </java>
+    </target>
+    <target name="LMExecutor-length">
+        <java classname="evaluation.LMExecutor" failonerror="true" fork="yes">
+            <arg line="/work/research/onsets/dat/lengthlm/ /work/research/onsets/dat/lengthlmr/ 0.629435 -0.005112"/>
             <classpath refid="SurprisalModel.classpath"/>
         </java>
     </target>
