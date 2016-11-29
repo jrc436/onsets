@@ -81,7 +81,7 @@
     <target name="OnsetReadExecutor">
         <java classname="data.OnsetReadExecutor" failonerror="true" fork="yes">
             <jvmarg line="-Xmx15g"/>
-            <arg line="-n 0 /work/research/surprisal-model/phonwords/ /work/research/surprisal-model/onsets/ /work/data/pmi/"/>
+            <arg line="-n 0 /work/research/onsets/dat/phonwords/ /work/research/onsets/dat/onsets2/"/>
             <classpath refid="SurprisalModel.classpath"/>
         </java>
     </target>
@@ -114,6 +114,12 @@
     <target name="LMExecutor-length">
         <java classname="evaluation.LMExecutor" failonerror="true" fork="yes">
             <arg line="/work/research/onsets/dat/lengthlm/ /work/research/onsets/dat/lengthlmr/ 0.629435 -0.005112"/>
+            <classpath refid="SurprisalModel.classpath"/>
+        </java>
+    </target>
+    <target name="LMExecutor-act">
+        <java classname="evaluation.LMExecutor" failonerror="true" fork="yes">
+            <arg line="/work/research/onsets/dat/sentopt/ /work/research/onsets/dat/sentoptr/ 0.654882 0.021344"/>
             <classpath refid="SurprisalModel.classpath"/>
         </java>
     </target>
