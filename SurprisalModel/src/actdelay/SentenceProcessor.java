@@ -5,8 +5,9 @@ import java.io.IOException;
 import java.nio.file.Paths;
 
 import actr.ProcessRunner;
+import data.AltWordStream;
+import data.IWordStream;
 import data.OnsetPairList;
-import data.WordStream;
 import ngrams.UnigramModel;
 import nlp.pmi.DictReformatter;
 import nlp.pmi.PMIDict;
@@ -19,11 +20,13 @@ public class SentenceProcessor extends LineProcessor<OnsetPairList, ActDelayList
 	private final int k;
 	private final UnigramModel u;
 	private final PMIDict pmi;
+	private final double pcs;
 	public SentenceProcessor() {
 		this.negD = 0;
 		this.k = 0;
 		this.u = null;
 		this.pmi = null;
+		this.pcs = 0.3;
 	}
 	public SentenceProcessor(String input, String output, String[] args) {
 		super(input, output, new ActDelayList());
@@ -37,6 +40,7 @@ public class SentenceProcessor extends LineProcessor<OnsetPairList, ActDelayList
 			e.printStackTrace();
 			System.exit(1);
 		}
+		this.pcs = 0.3;
 		this.u = u;
 		this.pmi = DictReformatter.readOversizeDict(args[3]);
 	}
@@ -46,6 +50,7 @@ public class SentenceProcessor extends LineProcessor<OnsetPairList, ActDelayList
 		this.u = other.u;
 		this.negD = vs.getValue(VariableName.negd);
 		this.k = (int) Math.round(vs.getValue(VariableName.recencyK));
+		this.pcs = vs.getValue(VariableName.percent_speaking);
 	}
 	@Override
 	public int getNumFixedArgs() {
@@ -74,8 +79,8 @@ public class SentenceProcessor extends LineProcessor<OnsetPairList, ActDelayList
 
 	@Override
 	public void map(OnsetPairList newData, ActDelayList threadAggregate) {
-		ProcessRunner pr = new ProcessRunner(negD, k, u, pmi);
-		WordStream sent = new WordStream(newData);
+		ProcessRunner pr = new ProcessRunner(negD, k, this.pcs, u, pmi);
+		IWordStream sent = new AltWordStream(newData);
 		threadAggregate.addAll(pr.realizeSentence(sent));
 	}
 

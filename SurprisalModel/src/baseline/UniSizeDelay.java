@@ -12,8 +12,8 @@ public class UniSizeDelay {
 		this.word = word;
 	}
 	public String toString() {
-		//return word+","+this.unigramscore + "," + this.wordlength + "," + this.delay;
-		return this.unigramscore + "," + this.delay;
+		return word+","+this.unigramscore + "," + this.wordlength + "," + this.delay;
+		//return this.unigramscore + "," + this.delay;
 	}
 	public double getDelay() {
 		return delay;

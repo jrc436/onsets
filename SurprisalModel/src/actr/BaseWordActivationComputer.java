@@ -4,13 +4,10 @@ import ngrams.UnigramModel;
 
 public class BaseWordActivationComputer {
 	private static final double expYears = 37;
-	private static final double pcs = 0.3; //percent speaking
+	private final double pcs;// = 0.3; //percent speaking
 	
 	private static final double speaking_rate = 196.0; //cite swbd speaking rate paper
-	private static final double year_seconds = 31557600; //365.25 * 24 * 3600	
-	//the first division is to convert it into words / second. The second division is to convert it into ngrams / second. 
-		//Realistically, as we're really using this to compute the TIME that's passing, NOT the ngrams, words_per_ngram shoudl always be 1.0
-	
+	private static final double year_seconds = 31557600; //365.25 * 24 * 3600		
 	private static final double speaking_rate_eff = (speaking_rate / 60.0);
 	
 	
@@ -18,10 +15,11 @@ public class BaseWordActivationComputer {
 	private final double priorExposureTime; 
 	private final UnigramModel model;
 	
-	public BaseWordActivationComputer(int k, UnigramModel m) {
+	public BaseWordActivationComputer(int k, double pcs, UnigramModel m) {
 		this.priorExposureTime = year_seconds * expYears;
 		this.k = k;
 		this.model = m;
+		this.pcs = pcs;
 	}
 	public double getPriorExposure() {
 		return priorExposureTime;
@@ -54,7 +52,7 @@ public class BaseWordActivationComputer {
 		double interval = priorExposureTime / (N+2); //add two, because we're starting at one interval from t0 and ending one interval before the convo
 		for (int i = 0; i < k; i++) {
 			double j = (double) (i+1);
-			c.addPresentation((totalTime - priorExposureTime) + j * interval, false); //these presentations were already added to the numPresentations, so don't need to be added again
+			c.addPresentation((totalTime - priorExposureTime) + j * interval, false); 
 		}
 	}
 	

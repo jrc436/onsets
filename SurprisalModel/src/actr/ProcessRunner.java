@@ -7,7 +7,7 @@ import java.util.List;
 import actdelay.ActDelay;
 import data.DelayEvent;
 import data.DelayWord;
-import data.WordStream;
+import data.IWordStream;
 import ngrams.UnigramModel;
 import nlp.pmi.PMIDict;
 
@@ -25,13 +25,13 @@ public class ProcessRunner {
 	private final int k;
 	private final PMIDict pmi;
 	
-	public ProcessRunner(double negD, int k, UnigramModel u, PMIDict pmi) {
-		this.base = new BaseWordActivationComputer(k, u);
+	public ProcessRunner(double negD, int k, double pcs, UnigramModel u, PMIDict pmi) {
+		this.base = new BaseWordActivationComputer(k, pcs, u);
 		this.negD = negD;
 		this.k = k;
 		this.pmi = pmi;
 	}
-	public List<ActDelay> realizeSentence(WordStream sentence) {
+	public List<ActDelay> realizeSentence(IWordStream sentence) {
 		List<ActDelay> actDelays = new ArrayList<ActDelay>();
 		DeclarativeMemory nGramPresentations = new DeclarativeMemory(k, negD, base, pmi);
 		// first need to parse the sentence into n-grams
