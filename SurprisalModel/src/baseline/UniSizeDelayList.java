@@ -1,6 +1,6 @@
 package baseline;
 
-import util.collections.GenericList;
+import util.generic.data.GenericList;
 import util.sys.DataType;
 
 public class UniSizeDelayList extends GenericList<UniSizeDelay> {

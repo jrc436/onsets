@@ -4,22 +4,23 @@ import ngrams.UnigramModel;
 
 public class BaseWordActivationComputer {
 	private static final double expYears = 37;
-	private final double pcs;// = 0.3; //percent speaking
+	private static final double year_seconds = 31557600; //365.25 * 24 * 3600	
 	
-	private static final double speaking_rate = 196.0; //cite swbd speaking rate paper
-	private static final double year_seconds = 31557600; //365.25 * 24 * 3600		
-	private static final double speaking_rate_eff = (speaking_rate / 60.0);
+	private final double wps;
+	//private final double pcs;// = 0.3; //percent speaking
+//	private static final double speaking_rate = 196.0; //cite swbd speaking rate paper
+//	private static final double speaking_rate_eff = (speaking_rate / 60.0);
 	
 	
 	private final int k;
 	private final double priorExposureTime; 
 	private final UnigramModel model;
 	
-	public BaseWordActivationComputer(int k, double pcs, UnigramModel m) {
+	public BaseWordActivationComputer(int k, double wps, UnigramModel m) {
 		this.priorExposureTime = year_seconds * expYears;
 		this.k = k;
 		this.model = m;
-		this.pcs = pcs;
+		this.wps = wps;
 	}
 	public double getPriorExposure() {
 		return priorExposureTime;
@@ -37,7 +38,7 @@ public class BaseWordActivationComputer {
 	
 	private int calculateNumPresentations(double ngramPrior) {
 		//subtracting k because those will be added when we add them as baserecency
-		int numPresentations = (int) Math.round(priorExposureTime * ngramPrior * speaking_rate_eff * pcs);
+		int numPresentations = (int) Math.round(priorExposureTime * ngramPrior * wps);
 		return Math.max(1, Math.max(k, numPresentations)); //need at least depth presentations for it to really make sense...
 															   //need at least one presentation for the math to work at all!
 	}

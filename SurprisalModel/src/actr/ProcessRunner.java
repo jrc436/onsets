@@ -3,8 +3,10 @@ package actr;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import actdelay.ActDelay;
+import actdelay.ActDelayDur;
 import data.DelayEvent;
 import data.DelayWord;
 import data.IWordStream;
@@ -25,8 +27,8 @@ public class ProcessRunner {
 	private final int k;
 	private final PMIDict pmi;
 	
-	public ProcessRunner(double negD, int k, double pcs, UnigramModel u, PMIDict pmi) {
-		this.base = new BaseWordActivationComputer(k, pcs, u);
+	public ProcessRunner(double negD, int k, double wps, UnigramModel u, PMIDict pmi) {
+		this.base = new BaseWordActivationComputer(k, wps, u);
 		this.negD = negD;
 		this.k = k;
 		this.pmi = pmi;
@@ -46,6 +48,40 @@ public class ProcessRunner {
 			else {
 				nGramPresentations.addDelayEventToWM();
 			}
+			convoElapsedTime += delay.getElapsedTime();
+			nGramPresentations.decayPresentations(delay.getElapsedTime());
+		}
+		return actDelays;
+	}
+	public List<ActDelayDur> realizeSentence(IWordStream sentence, Map<String, Double> wordDurs) {
+		List<ActDelayDur> actDelays = new ArrayList<ActDelayDur>();
+		DeclarativeMemory nGramPresentations = new DeclarativeMemory(k, negD, base, pmi);
+		// first need to parse the sentence into n-grams
+		Iterator<DelayEvent> delays = sentence.getEvents();
+		double prev = 0.0;
+		String prevword = "disfluency";
+		int i = 0;
+		while (delays.hasNext()) {
+			DelayEvent delay = delays.next();
+			if (delay instanceof DelayWord) {
+				DelayWord dw = (DelayWord) delay;
+				double act = nGramPresentations.present(dw.getWord(), totalTime());
+				ActDelay ad = new ActDelay(act, dw.getDelay());
+				actDelays.add(new ActDelayDur(ad, prev, prevword, i));
+				if (!wordDurs.containsKey(dw.getWord())) {
+					System.err.println("Incomplete Word Duration Map");
+					System.err.println(dw.getWord());
+					throw new RuntimeException();
+				}
+				prev = wordDurs.get(dw.getWord());
+				prevword = dw.getWord();
+			}
+			else {
+				nGramPresentations.addDelayEventToWM();
+				prev = 0.0;
+				prevword = "disfluency";
+			}
+			i++;
 			convoElapsedTime += delay.getElapsedTime();
 			nGramPresentations.decayPresentations(delay.getElapsedTime());
 		}

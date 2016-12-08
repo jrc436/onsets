@@ -6,6 +6,24 @@ import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.List;
 
+import nlp.util.TextNormalizer;
+
+//how does an ngram model work?
+//Well!
+//The probability of a given sentence is the joint probability of all of the ngrams in the sentence. Due to performance caps, we normally are really talking about
+//5 grams. So given some sentence of length N, do a sliding window of 5grams and sum them. Okay, done.
+
+//Okay, but how do we compute that 5gram probability if it's not there? Obviously, many 5grams probably won't have occurred in any given corpus, but that doesn't
+//mean their probability is zero! So we have to compute some kind of estimate... 
+
+//so we have A SINGLE basic functions: COMPUTE_JOINT_PROBABILITY [n | n-1...1]
+//                                         1. If in table, lookup
+//                                         2. If not in table, COMPUTE_JOINT_PROBABILITY [n | n-1...2] * BOW[n-1 | n-2 ... 1]
+//                                                                            NOTE: this isn't SO different than just adding the fuckers, so long as you're consistent
+//                                                                            SECONDNOTE: this should be the same process as when the order is too large, such as with a sentence
+//                                                                            THIRDNOTE: the important points, is basically you're still just saying P(1...n-1) * P(2...n)... bow is a normalization scheme
+                                    
+
 public class UnigramModel extends HashMap<String, Double> {
 	private static final long serialVersionUID = 6596387879736780034L;
 	private static final String unkString = "<unk>";
@@ -37,7 +55,7 @@ public class UnigramModel extends HashMap<String, Double> {
 				throw new IllegalArgumentException("malformed input");
 			}
 			//System.out.println(line);
-			String gramString = parts[1].toLowerCase();
+			String gramString = TextNormalizer.normalizeWord(parts[1]);
 			double val = Double.parseDouble(parts[0]);
 			m.put(gramString, val);
 		}

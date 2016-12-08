@@ -88,7 +88,7 @@
     <target name="SentenceExecutor">
         <java classname="actdelay.SentenceExecutor" failonerror="true" fork="yes">
             <jvmarg line="-Xmx10g"/>
-            <arg line="-n 5 /work/research/onsets/dat/onsets/ /work/research/onsets/dat/actdelays-test/ -0.5 5 /work/research/onsets/dat/sentences.lm /work/research/onsets/dat/pmi-r/"/>
+            <arg line="-n 5 /work/research/onsets/dat/onsets/ /work/research/onsets/dat/actdelays-durs/ false /work/research/onsets/dat/sentences.lm /work/research/onsets/dat/pmi-r/"/>
             <classpath refid="SurprisalModel.classpath"/>
         </java>
     </target>
@@ -101,25 +101,38 @@
     <target name="UniSizeExecutor">
         <java classname="baseline.UniSizeExecutor" failonerror="true" fork="yes">
             <jvmarg line="-Xmx15g"/>
-            <arg line="-n 5 /work/research/onsets/dat/onsets/ /work/research/onsets/dat/unilm/ /work/research/onsets/dat/sentences.lm"/>
+            <arg line="-n 5 /work/research/onsets/dat/onsets2/ /work/research/onsets/dat/lengthlm2/ /work/research/onsets/dat/sentences.lm"/>
             <classpath refid="SurprisalModel.classpath"/>
         </java>
     </target>
     <target name="LMExecutor-uni">
         <java classname="evaluation.LMExecutor" failonerror="true" fork="yes">
-            <arg line="/work/research/onsets/dat/unilm/ /work/research/onsets/dat/unilmr/ 0.635068 -4.342923"/>
+            <arg line="/work/research/onsets/dat/unilm2/ /work/research/onsets/dat/unilmr/ 0.348430 -4.755211"/>
             <classpath refid="SurprisalModel.classpath"/>
         </java>
     </target>
     <target name="LMExecutor-length">
         <java classname="evaluation.LMExecutor" failonerror="true" fork="yes">
-            <arg line="/work/research/onsets/dat/lengthlm/ /work/research/onsets/dat/lengthlmr/ 0.629435 -0.005112"/>
+            <arg line="/work/research/onsets/dat/lengthlm2/ /work/research/onsets/dat/lengthlmr2/ 0.3026121 0.0044138"/>
             <classpath refid="SurprisalModel.classpath"/>
         </java>
     </target>
     <target name="LMExecutor-act">
         <java classname="evaluation.LMExecutor" failonerror="true" fork="yes">
             <arg line="/work/research/onsets/dat/sentopt/ /work/research/onsets/dat/sentoptr/ 0.654882 0.021344"/>
+            <classpath refid="SurprisalModel.classpath"/>
+        </java>
+    </target>
+    <target name="WordDurationExecutor">
+        <java classname="durations.WordDurationExecutor" failonerror="true" fork="yes">
+            <arg line="/work/research/onsets/dat/onsets/ /work/research/onsets/dat/durations/"/>
+            <classpath refid="SurprisalModel.classpath"/>
+        </java>
+    </target>
+    <target name="SentenceExecutorDur">
+        <java classname="actdelay.SentenceExecutorDur" failonerror="true" fork="yes">
+            <jvmarg line="-Xmx10g"/>
+            <arg line="-n 5 /work/research/onsets/dat/onsets/ /work/research/onsets/dat/actdelaydurwordsidx/ /work/research/onsets/dat/durations/durations-0.txt /work/research/onsets/dat/sentences.lm /work/research/onsets/dat/pmi-r/"/>
             <classpath refid="SurprisalModel.classpath"/>
         </java>
     </target>
