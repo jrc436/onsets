@@ -1,11 +1,11 @@
 package actdelay;
 
-import data.OnsetPairList;
+import data.WordStream;
 import optimizers.ValleyClimber;
 
-public class SentenceOptimizer extends ValleyClimber<ActDelay, SentenceProcessor, OnsetPairList, ActDelayList> {
+public class SentenceOptimizer extends ValleyClimber<ActDelay, ADSentenceProcessor, WordStream, ActDelayList> {
 	public SentenceOptimizer() {
-		super(15, "sentopt", SentenceProcessor.class, OnsetPairList.class, ActDelayList.class);
+		super(15, "sentopt", ADSentenceProcessor.class, WordStream.class, ActDelayList.class);
 	}
 	public static void main(String[] args) {
 		SentenceOptimizer so = new SentenceOptimizer();

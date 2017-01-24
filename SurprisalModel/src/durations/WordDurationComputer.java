@@ -44,6 +44,9 @@ public class WordDurationComputer extends FileProcessor<OnsetPairList, WordDurat
 			if (!threadAggregate.containsKey(op.getWord())) {
 				threadAggregate.put(op.getWord(), new ArrayList<Double>());
 			}
+			if (threadAggregate.get(op.getWord()) == null) {
+				System.err.println("well ok");
+			}
 			threadAggregate.get(op.getWord()).add(op.getEnd() - op.getOnset());
 		}
 	}

@@ -1,17 +1,29 @@
 package actdelay;
 
+import java.util.Queue;
+
 public class ActDelayDur {
 	private final ActDelay actd;
-	private final double prevDuration;
+	private final double[] prevDiffs;
 	private final String wordid;
-	private final int wordIdx;
-	public ActDelayDur(ActDelay actd, double prevDuration, String wordid, int wordIdx) {
+//	private final int wordIdx;
+//	private final int sentIdx;
+	public ActDelayDur(ActDelay actd, Queue<Double> prevDiffs, String wordid) {//, String wordid, int wordIdx) {
 		this.actd = actd;
-		this.prevDuration = prevDuration;
+		this.prevDiffs = new double[prevDiffs.size()];
+		int i = 0;
+		for (double d : prevDiffs) {
+			this.prevDiffs[prevDiffs.size()-i] = d;
+			i++;
+		}
 		this.wordid = wordid;
-		this.wordIdx = wordIdx;
+//		this.wordIdx = wordIdx;
 	}
 	public String toString() {
-		return actd.toString()+","+prevDuration + "," + wordid + "," + wordIdx;
+		String durs = "";
+		for (double d : prevDiffs) {
+			durs += d +",";
+		}
+		return actd.toString()+","+durs + wordid;
 	}
 }

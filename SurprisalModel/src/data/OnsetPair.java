@@ -6,19 +6,13 @@ public class OnsetPair implements Comparable<OnsetPair> {
 	private final double onset; //sentence start relative
 	private final double end;
 	private final String word; 
-	private final int sentenceID;
-	private final int convoID;
-	private final int wordIdx;
-	public OnsetPair(double onset, double end, String word, int sentenceID) {
+//	private final int sentenceID;
+//	private final int convoID;
+//	private final int wordIdx;
+	public OnsetPair(double onset, double end, String word) {//, int sentenceID) {
 		this.onset = onset;
 		this.end = end;
-		this.sentenceID = sentenceID;
-		if (isWord(word)) {
-			this.word = TextNormalizer.normalizeWord(word);
-		}
-		else {
-			this.word = "[disfluency]";
-		}
+		this.word = TextNormalizer.normalizeWord(word);
 	}
 	public double getOnset() {
 		return onset;

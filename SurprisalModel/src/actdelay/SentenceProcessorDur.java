@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import actr.ProcessRunner;
+import actr.WordStreamRunner;
 import data.IWordStream;
 import data.OnsetPairList;
 import data.WordStream;
@@ -29,6 +29,7 @@ public class SentenceProcessorDur extends LineProcessor<OnsetPairList, ActDelayD
 	private final static double wps_const = 5.0;
 	private final static double negd_const = -0.35;
 	private final static int kconst = 5;
+	private final int numPrevious;
 	public SentenceProcessorDur() {
 		this.negD = 0;
 		this.k = 0;
@@ -36,9 +37,11 @@ public class SentenceProcessorDur extends LineProcessor<OnsetPairList, ActDelayD
 		this.pmi = null;
 		this.wps = wps_const;
 		this.wordDurs = null;
+		this.numPrevious = 0;
 	}
-	public SentenceProcessorDur(String input, String output, String[] args) {
-		super(input, output, new ActDelayDurList());
+	public SentenceProcessorDur(String input, String output, String[] args, String[] size) {
+		super(input, output, new ActDelayDurList(size));
+		this.numPrevious = Integer.parseInt(size[0]);
 		this.negD = negd_const;
 		this.k = kconst;
 		UnigramModel u = null;
@@ -71,6 +74,7 @@ public class SentenceProcessorDur extends LineProcessor<OnsetPairList, ActDelayD
 		this.negD = vs.getValue(VariableName.negd);
 		this.k = (int) Math.round(vs.getValue(VariableName.recencyK));
 		this.wps = vs.getValue(VariableName.words_per_second);
+		this.numPrevious = 0;
 	}
 	@Override
 	public int getNumFixedArgs() {
@@ -99,7 +103,7 @@ public class SentenceProcessorDur extends LineProcessor<OnsetPairList, ActDelayD
 
 	@Override
 	public void map(OnsetPairList newData, ActDelayDurList threadAggregate) {
-		ProcessRunner pr = new ProcessRunner(negD, k, this.wps, u, pmi);
+		WordStreamRunner pr = new WordStreamRunner(negD, k, this.wps, u, pmi, numPrevious);
 		IWordStream sent = new WordStream(newData);
 		threadAggregate.addAll(pr.realizeSentence(sent, wordDurs));
 	}

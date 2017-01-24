@@ -4,12 +4,16 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import util.sys.DataType;
+
 public class WordStream implements IWordStream {
 	private List<DelayEvent> delayWords;
+	private final OnsetPairList dataType;
 	public WordStream(OnsetPairList os) {
 		if (os.isEmpty()) {
 			throw new IllegalArgumentException();
 		}
+		this.dataType = os;
 		delayWords = new ArrayList<DelayEvent>();
 		double lastWordStart = 0.0;
 		double lastWordEnd = 0.0;
@@ -35,5 +39,26 @@ public class WordStream implements IWordStream {
 	@Override
 	public Iterator<DelayEvent> getEvents() {
 		return delayWords.iterator();
+	}
+	@Override
+	public DataType deepCopy() {
+		return new WordStream(dataType);
+	}
+	@Override
+	public int getNumFixedArgs() {
+		return dataType.getNumFixedArgs();
+	}
+	@Override
+	public boolean hasNArgs() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public String getConstructionErrorMsg() {
+		return dataType.getConstructionErrorMsg()+": the core of wordstream";
+	}
+	@Override
+	public Iterator<String> getStringIter() {
+		return dataType.getStringIter();
 	}
 }

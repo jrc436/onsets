@@ -55,9 +55,18 @@ public class UnigramModel extends HashMap<String, Double> {
 				throw new IllegalArgumentException("malformed input");
 			}
 			//System.out.println(line);
-			String gramString = TextNormalizer.normalizeWord(parts[1]);
+//			List<String> gramStrings = TextNormalizer.normalizeWord(parts[1]);
+//			if (gramStrings.size() > 1) {
+//				System.err.println(gramStrings);
+//				System.err.println(p);
+//				System.err.println("This file contains malformatted words");
+//				System.err.println("Continuing...");
+//			}
+//			else if (gramStrings.size() == 0) {
+//				continue;
+//			}
 			double val = Double.parseDouble(parts[0]);
-			m.put(gramString, val);
+			m.put(TextNormalizer.normalizeWord(parts[1]), val);
 		}
 		if (!m.containsKey(unkString)) {
 			throw new IllegalArgumentException("LM without unk won't work!");

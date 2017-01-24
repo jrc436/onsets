@@ -11,9 +11,18 @@ public class ActDelayDurList extends GenericList<ActDelayDur> {
 
 	public ActDelayDurList() {
 		super();
+		this.size = 0;
+	}
+	public ActDelayDurList(String[] size) {
+		this(Integer.parseInt(size[0]));
+	}
+	private final int size;
+	public ActDelayDurList(int size) {
+		this.size = size;
 	}
 	public ActDelayDurList(ActDelayDurList other) {
 		super(other);
+		this.size = other.size;
 	}
 	@Override
 	public DataType deepCopy() {
@@ -22,23 +31,25 @@ public class ActDelayDurList extends GenericList<ActDelayDur> {
 
 	@Override
 	public int getNumFixedArgs() {
-		// TODO Auto-generated method stub
-		return 0;
+		return 1;
 	}
 
 	@Override
 	public boolean hasNArgs() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public String getConstructionErrorMsg() {
-		return "has no args";
+		return "needs the number of previous elements";
 	}
 	@Override
 	public String getHeaderLine() {
-		return "activation,delay,duration,word";
+		String durs = "";
+		for (int i = 0; i < size; i++) {
+			durs += "duration"+i + ",";
+		}
+		return "activation,delay,"+durs+"word";
 	}
 
 }

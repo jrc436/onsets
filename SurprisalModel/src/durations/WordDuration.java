@@ -2,6 +2,7 @@ package durations;
 
 import java.util.List;
 
+import nlp.util.TextNormalizer;
 import util.generic.data.GenericMap;
 import util.sys.DataType;
 
@@ -17,6 +18,12 @@ public class WordDuration extends GenericMap<String, List<Double>> {
 	@Override
 	public DataType deepCopy() {
 		return new WordDuration(this);
+	}
+	
+	@Override
+	public List<Double> put(String key, List<Double> value) {
+		key = TextNormalizer.normalizeWord(key);
+		return super.put(key, value);
 	}
 
 	@Override

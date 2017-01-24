@@ -2,6 +2,8 @@ package data;
 
 import java.util.Iterator;
 
-public interface IWordStream {
+import util.sys.DataType;
+
+public interface IWordStream extends DataType {
 	public Iterator<DelayEvent> getEvents();
 }
