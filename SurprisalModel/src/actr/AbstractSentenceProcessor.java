@@ -1,7 +1,11 @@
 package actr;
 
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import ngrams.UnigramModel;
 import nlp.pmi.DictReformatter;
@@ -33,8 +37,17 @@ public abstract class AbstractSentenceProcessor<F extends DataType, K, E extends
 		this.negD = negd_const;
 		this.k = kconst;
 		UnigramModel u = null;
+		Map<String, Double> w = new HashMap<String, Double>();
 		try {
 			u = UnigramModel.readFile(Paths.get(args[1]));
+			List<String> lines = Files.readAllLines(Paths.get(args[0]));
+			for (int i = 0; i < lines.size(); i++) {
+				if (i == 0) {
+					continue; //skip the poop header
+				}
+				String[] p = lines.get(i).split(",");
+				w.put(p[0], Double.parseDouble(p[1]));
+			}
 		} 
 		catch (IOException e) {
 			e.printStackTrace();
@@ -43,6 +56,7 @@ public abstract class AbstractSentenceProcessor<F extends DataType, K, E extends
 		this.wps = wps_const;
 		this.u = u;
 		this.pmi = DictReformatter.readOversizeDict(args[2]);
+		super.setInitialValue(constructAggregate());
 	}
 	public AbstractSentenceProcessor(String input, String output, AbstractSentenceProcessor<F, K, E> other, VariableSet vs) {
 		super(input, output);
@@ -64,8 +78,7 @@ public abstract class AbstractSentenceProcessor<F extends DataType, K, E extends
 
 	@Override
 	public String getConstructionErrorMsg() {
-		return "SentenceProcessor first needs a boolean value representing whether to use delays or intervals, "
-				+ "then the path to the unigram model for computing bll, and finally, the PMI Path";
+		return "SentenceProcessor first needs the path to the unigram model for computing bll, secondly the word durations file, and finally, the PMI Path";
 	}
 	protected abstract E constructAggregate();
 	protected abstract AbstractProcessRunner<F, K> buildRunner(double negD, int k, double wps, UnigramModel u, PMIDict pmi);

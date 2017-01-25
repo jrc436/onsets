@@ -4,7 +4,7 @@ import java.io.File;
 
 import actr.AbstractProcessRunner;
 import actr.AbstractSentenceProcessor;
-import data.IWordStream;
+import actr.WordStreamRunner;
 import data.OnsetPairList;
 import data.WordStream;
 import ngrams.UnigramModel;
@@ -26,14 +26,6 @@ public class ADSentenceProcessor extends AbstractSentenceProcessor<WordStream, A
 		return new WordStream(OnsetPairList.readFile(f));
 	}
 	
-
-//	@Override
-//	public void map(OnsetPairList newData, ActDelayList threadAggregate) {
-//		ProcessRunner pr = new ProcessRunner(negD, k, this.wps, u, pmi, 0);
-//		IWordStream sent = new WordStream(newData);
-//		threadAggregate.addAll(pr.realizeSentence(sent));
-//	}
-
 	@Override
 	protected ActDelayList constructAggregate() {
 		return new ActDelayList();
@@ -41,8 +33,7 @@ public class ADSentenceProcessor extends AbstractSentenceProcessor<WordStream, A
 
 	@Override
 	protected AbstractProcessRunner<WordStream, ActDelay> buildRunner(double negD, int k, double wps, UnigramModel u, PMIDict pmi) {
-		// TODO Auto-generated method stub
-		return null;
+		return new WordStreamRunner(negD, k, wps, u, pmi, 0, null);
 	}
 
 }

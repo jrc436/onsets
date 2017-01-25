@@ -1,5 +1,6 @@
 package actr;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -36,9 +37,9 @@ public abstract class AbstractProcessRunner<F, K> {
 	public List<K> realizeSentence(F sentence) {
 		DeclarativeMemory dm = new DeclarativeMemory(k, negD, base, pmi);
 		initializePreviousTimes();
-		return realizeSentenceCritical(sentence, dm, wordDurs);
+		return realizeSentenceCritical(sentence, dm);
 	}
-	protected abstract List<K> realizeSentenceCritical(F sentence, DeclarativeMemory dm, Map<String, Double> wordDurs);
+	protected abstract List<K> realizeSentenceCritical(F sentence, DeclarativeMemory dm);
 	protected void elapseTime(double time) {
 		convoElapsedTime += time;
 	}
@@ -47,11 +48,30 @@ public abstract class AbstractProcessRunner<F, K> {
 			previousTimes.offer(convoElapsedTime);
 		}
 	}
-	protected void addTime(double time) {
+	public double getWordDuration(String s) {
+		if (wordDurs == null) {
+			return 0.0;
+		}
+		else if (!wordDurs.containsKey(s)) {
+			throw new RuntimeException("Incomplete word duration dictionary");
+		}
+		return wordDurs.get(s);
+	}
+	protected void addPrevious(double time) {
 		previousTimes.offer(time);
 		previousTimes.poll();
 	}
 	protected Queue<Double> getPrevious() {
 		return previousTimes;
+	}
+	protected Map<String, Double> getSubMap(List<String> words) {
+		if (wordDurs == null) {
+			return null;
+		}
+		Map<String, Double> map = new HashMap<String, Double>();
+		for (String word : words) {
+			map.put(word, getWordDuration(word));
+		}
+		return map;
 	}
 }

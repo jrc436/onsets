@@ -46,10 +46,4 @@ public class TimeWindowProcessor extends LineProcessor<OnsetPairList, TimeWindow
 		threadAggregate.add(ConvoWindowList.fromWordStream(ws, threadAggregate.getWindowSize()));
 	}
 
-//	@Override
-//	public void reduce(TimeWindowList threadAggregate) {
-//		// TODO Auto-generated method stub
-//		
-//	}
-
 }

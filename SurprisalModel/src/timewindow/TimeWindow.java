@@ -24,6 +24,9 @@ public class TimeWindow  {
 		return ((double) words.size()) / duration;
 	}
 	public double getNormalizedSpeakingRate(Map<String, Double> durations) {
+		if (durations == null) {
+			return getSpeakingRate();
+		}
 		return ((double) words.size()) / getNormalizedDuration(durations);
 	}
 	public double getNormalizedDuration(Map<String, Double> map) {

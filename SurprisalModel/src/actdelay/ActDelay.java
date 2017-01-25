@@ -10,6 +10,11 @@ public class ActDelay extends DoublePair {
 		this.activation = activation;
 		this.delay = delay;
 	}
+	public ActDelay(ActDelay other) {
+		super(other.activation, other.delay);
+		this.activation = other.activation;
+		this.delay = other.delay;
+	}
 	public double getActivation() {
 		return activation;
 	}
