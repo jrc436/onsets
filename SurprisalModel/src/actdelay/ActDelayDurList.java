@@ -45,11 +45,11 @@ public class ActDelayDurList extends GenericList<ActDelayDur> {
 	}
 	@Override
 	public String getHeaderLine() {
-		String durs = "";
-		for (int i = 0; i < size; i++) {
-			durs += "duration"+i + ",";
-		}
-		return "activation,delay,"+durs+"word";
+//		String durs = "";
+//		for (int i = 0; i < size; i++) {
+//			durs += "duration"+i + ",";
+//		}
+		return "activation,delay,index,word";
 	}
 
 }

@@ -22,17 +22,21 @@ public abstract class AbstractSentenceProcessor<F extends DataType, K, E extends
 	private final UnigramModel u;
 	private final PMIDict pmi;
 	private final double wps;
+	private final int numPrev;
+	private final Map<String, Double> wordDurs;
 	private final static double wps_const = 5.0;
 	private final static double negd_const = -0.35;
 	private final static int kconst = 5;
 	public AbstractSentenceProcessor() {
 		this.negD = 0;
 		this.k = 0;
+		this.numPrev = 0;
 		this.u = null;
 		this.pmi = null;
 		this.wps = wps_const;
+		this.wordDurs = null;
 	}
-	public AbstractSentenceProcessor(String input, String output, String[] args) {
+	public AbstractSentenceProcessor(String input, String output, String[] args, String[] inpArgs) {
 		super(input, output);
 		this.negD = negd_const;
 		this.k = kconst;
@@ -56,19 +60,26 @@ public abstract class AbstractSentenceProcessor<F extends DataType, K, E extends
 		this.wps = wps_const;
 		this.u = u;
 		this.pmi = DictReformatter.readOversizeDict(args[2]);
-		super.setInitialValue(constructAggregate());
+		this.numPrev = Integer.parseInt(args[3]);
+		this.wordDurs = w;
+		super.setInitialValue(constructAggregate(inpArgs));
+	}
+	public AbstractSentenceProcessor(String input, String output, String[] args) {
+		this(input, output, args, null);
 	}
 	public AbstractSentenceProcessor(String input, String output, AbstractSentenceProcessor<F, K, E> other, VariableSet vs) {
 		super(input, output);
 		this.pmi = other.pmi;
 		this.u = other.u;
+		this.wordDurs = other.wordDurs;
+		this.numPrev = other.numPrev;
 		this.negD = vs.getValue(VariableName.negd);
 		this.k = (int) Math.round(vs.getValue(VariableName.recencyK));
 		this.wps = vs.getValue(VariableName.words_per_second);
 	}
 	@Override
 	public int getNumFixedArgs() {
-		return 3;
+		return 4;
 	}
 
 	@Override
@@ -78,16 +89,16 @@ public abstract class AbstractSentenceProcessor<F extends DataType, K, E extends
 
 	@Override
 	public String getConstructionErrorMsg() {
-		return "SentenceProcessor first needs the path to the unigram model for computing bll, secondly the word durations file, and finally, the PMI Path";
+		return "SentenceProcessor first needs the path to the unigram model for computing bll, secondly, the PMI Path, the word durations file, finally the number of previous,";
 	}
-	protected abstract E constructAggregate();
-	protected abstract AbstractProcessRunner<F, K> buildRunner(double negD, int k, double wps, UnigramModel u, PMIDict pmi);
+	protected abstract E constructAggregate(String[] inpArgs);
+	protected abstract AbstractProcessRunner<F, K> buildRunner(double negD, int k, double wps, UnigramModel u, PMIDict pmi,  int numPrev, Map<String, Double> durs);
 	@Override
 	public abstract F getNextData();
 
 	@Override
 	public void map(F newData, E threadAggregate) {
-		AbstractProcessRunner<F, K> runner = buildRunner(negD, k, wps, u, pmi);
+		AbstractProcessRunner<F, K> runner = buildRunner(negD, k, wps, u, pmi, numPrev, wordDurs);
 		threadAggregate.addAll(runner.realizeSentence(newData));
 	}
 

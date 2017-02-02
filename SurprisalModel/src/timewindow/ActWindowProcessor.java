@@ -1,6 +1,7 @@
 package timewindow;
 
 import java.io.File;
+import java.util.Map;
 
 import actr.AbstractProcessRunner;
 import actr.AbstractSentenceProcessor;
@@ -12,8 +13,8 @@ public class ActWindowProcessor extends AbstractSentenceProcessor<TimeWindowList
 	public ActWindowProcessor() {
 		super();
 	}
-	public ActWindowProcessor(String input, String output, String[] args) {
-		super(input, output, args);
+	public ActWindowProcessor(String input, String output, String[] args, String[] timedur) {
+		super(input, output, args, timedur);
 	}
 	
 	@Override
@@ -26,12 +27,12 @@ public class ActWindowProcessor extends AbstractSentenceProcessor<TimeWindowList
 	}
 
 	@Override
-	protected ActWindowList constructAggregate() {
+	protected ActWindowList constructAggregate(String[] inpArgs) {
 		return new ActWindowList();
 	}
 
 	@Override
-	protected AbstractProcessRunner<TimeWindowList, ActWindow> buildRunner(double negD, int k, double wps, UnigramModel u, PMIDict pmi) {
-		return new WindowProcessRunner(negD, k, wps, u, pmi, 0, null);
+	protected AbstractProcessRunner<TimeWindowList, ActWindow> buildRunner(double negD, int k, double wps, UnigramModel u, PMIDict pmi, int numPrev, Map<String, Double> durs) {
+		return new WindowProcessRunner(negD, k, wps, u, pmi, numPrev, durs);
 	}
 }

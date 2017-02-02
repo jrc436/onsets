@@ -39,12 +39,15 @@ public class TimeWindowList extends GenericList<ConvoWindowList> {
 	}
 	public static TimeWindowList fromFile(File f) {
 		List<ConvoWindowList> cwll = new ArrayList<ConvoWindowList>();
+		int i = 0;
 		try {
 			List<String> lines = Files.readAllLines(f.toPath());
 			for (String line : lines) {
+				i++;
 				cwll.add(ConvoWindowList.fromString(line));
 			}
-		} catch (IOException e) {
+		} catch (IOException|IllegalArgumentException e) {
+			System.err.println("File:"+f+", line:"+i);
 			e.printStackTrace();
 			System.exit(1);
 		}

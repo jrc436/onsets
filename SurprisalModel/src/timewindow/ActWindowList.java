@@ -36,5 +36,9 @@ public class ActWindowList extends GenericList<ActWindow> {
 	public String getConstructionErrorMsg() {
 		return "requires no args";
 	}
+	@Override
+	public String getHeaderLine() {
+		return "index,word,activation,speed";
+	}
 
 }

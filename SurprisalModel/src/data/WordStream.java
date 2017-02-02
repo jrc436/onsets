@@ -9,6 +9,10 @@ import util.sys.DataType;
 public class WordStream implements IWordStream {
 	private List<DelayEvent> delayWords;
 	private final OnsetPairList dataType;
+	public WordStream() {
+		super();
+		this.dataType = new OnsetPairList();
+	}
 	public WordStream(OnsetPairList os) {
 		if (os.isEmpty()) {
 			throw new IllegalArgumentException();

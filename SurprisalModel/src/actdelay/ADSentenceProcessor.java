@@ -1,6 +1,7 @@
 package actdelay;
 
 import java.io.File;
+import java.util.Map;
 
 import actr.AbstractProcessRunner;
 import actr.AbstractSentenceProcessor;
@@ -12,7 +13,12 @@ import nlp.pmi.PMIDict;
 import optimizers.VariableSet;
 
 public class ADSentenceProcessor extends AbstractSentenceProcessor<WordStream, ActDelay, ActDelayList> {
-
+	public ADSentenceProcessor() {
+		super();
+	}
+	public ADSentenceProcessor(String input, String output, String[] args) {
+		super(input, output, args);
+	}
 	public ADSentenceProcessor(String input, String output, ADSentenceProcessor other, VariableSet vs) {
 		super(input, output, other, vs);
 	}
@@ -27,13 +33,13 @@ public class ADSentenceProcessor extends AbstractSentenceProcessor<WordStream, A
 	}
 	
 	@Override
-	protected ActDelayList constructAggregate() {
+	protected ActDelayList constructAggregate(String[] inpArgs) {
 		return new ActDelayList();
 	}
 
 	@Override
-	protected AbstractProcessRunner<WordStream, ActDelay> buildRunner(double negD, int k, double wps, UnigramModel u, PMIDict pmi) {
-		return new WordStreamRunner(negD, k, wps, u, pmi, 0, null);
+	protected AbstractProcessRunner<WordStream, ActDelay> buildRunner(double negD, int k, double wps, UnigramModel u, PMIDict pmi, int numPrev, Map<String, Double> durs) {
+		return new WordStreamRunner(negD, k, wps, u, pmi, numPrev, durs);
 	}
 
 }

@@ -68,7 +68,7 @@ public class TimeWindow  {
 	public String toString() {
 		String words = "";
 		for (String word : this.words) {
-			words = word + delim;
+			words += word + delim;
 		}
 		if (!words.isEmpty()) {
 			words = words.substring(0, words.length()-delim.length());
@@ -76,14 +76,14 @@ public class TimeWindow  {
 		return this.words.size()+","+duration+","+words;
 	}
 	public static TimeWindow fromString(String s) {
-		String[] parts = s.split(",");
+		String[] parts = s.split(",", -1);
 		if (parts.length != 3) {
 			throw new IllegalArgumentException("String: "+s+" does not contain a TimeWindow");
 		}
-		String[] words = parts[2].split(delim);
-		int expwordsize = Integer.parseInt(words[0]);
+		String[] words = parts[2].isEmpty() ? new String[0] : parts[2].split(delim);
+		int expwordsize = Integer.parseInt(parts[0]);
 		if (expwordsize != words.length) {
-			throw new IllegalArgumentException("String: "+s+" has a mismatch between actual and expected words");
+			throw new IllegalArgumentException("String: "+s+" has a mismatch between actual("+words.length+") and expected("+expwordsize+") words");
 		}
 		List<String> wordlist = new ArrayList<String>();
 		for (String word : words) {

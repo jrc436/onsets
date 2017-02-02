@@ -30,7 +30,12 @@ public class WordStreamRunner extends AbstractProcessRunner<WordStream, ActDelay
 				DelayWord dw = (DelayWord) delay;
 				double act = nGramPresentations.present(dw.getWord(), totalTime());
 				ActDelay ad = new ActDelay(act, dw.getDelay());
-				super.addPrevious(dw.getDelay() - super.getWordDuration(dw.getWord()));
+				double diff = dw.getDelay();
+				double dur = super.getWordDuration(dw.getWord());
+				if (dur == -77) {
+					dur = diff; //zero that shit out;
+				}
+				super.addPrevious(diff - dur);
 				prevword = dw.getWord();
 				actDelays.add(new ActDelayDur(ad, super.getPrevious(), prevword));
 			}

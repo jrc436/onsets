@@ -53,7 +53,8 @@ public abstract class AbstractProcessRunner<F, K> {
 			return 0.0;
 		}
 		else if (!wordDurs.containsKey(s)) {
-			throw new RuntimeException("Incomplete word duration dictionary");
+			System.err.println("Incomplete word duration dictionary, lacking: "+s);
+			return -77.0;
 		}
 		return wordDurs.get(s);
 	}
