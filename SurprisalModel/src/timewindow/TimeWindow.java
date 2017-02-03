@@ -32,7 +32,7 @@ public class TimeWindow  {
 	public double getNormalizedDuration(Map<String, Double> map) {
 		double diff = 0.0;
 		for (String word : words) {
-			diff -= map.get(word);
+			diff += map.get(word);
 		}
 		return duration - diff;
 	}
