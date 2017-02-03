@@ -24,7 +24,8 @@ public class WindowProcessRunner extends AbstractProcessRunner<TimeWindowList, A
 					double act = nGramPresentations.present(word, totalTime());
 					retval.add(new ActWindow(super.getPrevious(), act, word));
 				}
-				super.addPrevious(tw.getNormalizedSpeakingRate(twmap));
+				//super.addPrevious(tw.getNormalizedSpeakingRate(twmap));
+				super.addPrevious(tw.getSpeakingRate());
 				elapseTime(tw.getDuration());
 				nGramPresentations.decayPresentations(tw.getDuration());
 			}
