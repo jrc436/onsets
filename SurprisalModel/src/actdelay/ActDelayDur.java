@@ -1,6 +1,7 @@
 package actdelay;
 
 import java.util.Queue;
+import java.util.Random;
 
 public class ActDelayDur extends ActDelay {
 	private final double[] prevDiffs;
@@ -31,11 +32,15 @@ public class ActDelayDur extends ActDelay {
 		String word = parts[parts.length-1];
 		String newline = System.getProperty("line.separator");
 		String toReturn = "";
-		for (int i = 1; i < parts.length-1; i++) {
-			int idx = i-1;
-			String line = activation+","+parts[i]+","+idx+","+word;
-			toReturn += line + newline;
-		}
+		int rando = new Random().nextInt(parts.length-2)+1;
+		int idx = rando-1;
+		String line = activation + ","+parts[rando]+","+idx+","+word;
+		toReturn += line;
+//		for (int i = 1; i < parts.length-1; i++) {
+//			int idx = i-1;
+//			String line = activation+","+parts[i]+","+idx+","+word;
+//			toReturn += line + newline;
+//		}
 		if (!toReturn.isEmpty()) {
 			toReturn = toReturn.substring(0, toReturn.length()-1);
 		}
