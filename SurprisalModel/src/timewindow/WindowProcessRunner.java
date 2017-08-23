@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import actr.AbstractProcessRunner;
-import actr.DeclarativeMemory;
+import dm.DeclarativeMemory;
 import ngrams.UnigramModel;
 import nlp.pmi.PMIDict;
 
@@ -21,12 +21,12 @@ public class WindowProcessRunner extends AbstractProcessRunner<TimeWindowList, A
 			for (TimeWindow tw : sentence) {
 				Map<String, Double> twmap = super.getSubMap(tw.getWords());
 				for (String word : tw.getWords()) {
-					double act = nGramPresentations.present(word, totalTime());
+					double act = nGramPresentations.present(word);
 					retval.add(new ActWindow(super.getPrevious(), act, word));
 				}
 				super.addPrevious(tw.getNormalizedSpeakingRate(twmap));
 				elapseTime(tw.getDuration());
-				nGramPresentations.decayPresentations(tw.getDuration());
+				nGramPresentations.step(tw.getDuration());
 			}
 		}
 		return retval;

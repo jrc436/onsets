@@ -3,7 +3,7 @@
               Any modifications will be overwritten.
               To include a user specific buildfile here, simply create one in the same
               directory with the processing instruction <?eclipse.ant.import?>
-              as the first entry and export the buildfile again. --><project basedir="." default="build" name="SurprisalModel">
+              as the first entry and export the buildfile again. --><project basedir="." default="build" name="WorkingMemory">
     <property environment="env"/>
     <property name="ECLIPSE_HOME" value="../../../../opt/eclipse/"/>
     <property name="Executors.location" value="../../executors"/>
@@ -35,10 +35,10 @@
         <pathelement location="${ACTR.location}/bin"/>
         <path refid="Executors.classpath"/>
     </path>
-    <path id="SurprisalModel.classpath">
+    <path id="WorkingMemory.classpath">
         <pathelement location="bin"/>
-        <path refid="Executors.classpath"/>
         <path refid="ACTR.classpath"/>
+        <path refid="Executors.classpath"/>
     </path>
     <target name="init">
         <mkdir dir="bin"/>
@@ -73,7 +73,7 @@
         <echo message="${ant.project.name}: ${ant.file}"/>
         <javac debug="true" debuglevel="${debuglevel}" destdir="bin" includeantruntime="false" source="${source}" target="${target}">
             <src path="src"/>
-            <classpath refid="SurprisalModel.classpath"/>
+            <classpath refid="WorkingMemory.classpath"/>
         </javac>
     </target>
     <target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects"/>
@@ -90,74 +90,11 @@
         <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
         <antcall target="build"/>
     </target>
-    <target name="OnsetReadExecutor">
-        <java classname="data.OnsetReadExecutor" failonerror="true" fork="yes">
-            <jvmarg line="-Xmx15g"/>
-            <arg line="-n 0 /work/research/onsets/dat/phonwords/ /work/research/onsets/dat/onsets2/"/>
-            <classpath refid="SurprisalModel.classpath"/>
-        </java>
-    </target>
-    <target name="SentenceExecutor">
-        <java classname="actdelay.SentenceExecutor" failonerror="true" fork="yes">
-            <jvmarg line="-Xmx10g"/>
-            <arg line="-n 5 /work/research/onsets/dat/onsets/ /work/research/onsets/dat/multidelays15/ /work/research/onsets/dat/durations/durations-0.txt /work/research/onsets/dat/sentences.lm /work/research/onsets/dat/pmi-r/ 15"/>
-            <classpath refid="SurprisalModel.classpath"/>
-        </java>
-    </target>
-    <target name="SentenceOptimizer">
-        <java classname="actdelay.SentenceOptimizer" failonerror="true" fork="yes">
-            <arg line="vars:[negd:-0.5:-0.05:-0.95:0.05,rt_intercept:1.0:-100.0:100.0:1.0,cutoffK:1.0:0.5:2.0:0.25,recencyK:5.0:1.0:10.0:1.0] evaluation.RsquaredRetrievalTime -n 5 /work/research/onsets/dat/onsets/ /work/research/onsets/dat/actdelays/ -0.5 5 /work/research/onsets/dat/sentences.lm /work/research/onsets/dat/pmi-r/"/>
-            <classpath refid="SurprisalModel.classpath"/>
-        </java>
-    </target>
-    <target name="UniSizeExecutor">
-        <java classname="baseline.UniSizeExecutor" failonerror="true" fork="yes">
-            <jvmarg line="-Xmx15g"/>
-            <arg line="-n 5 /work/research/onsets/dat/onsets2/ /work/research/onsets/dat/lengthlm2/ /work/research/onsets/dat/sentences.lm"/>
-            <classpath refid="SurprisalModel.classpath"/>
-        </java>
-    </target>
-    <target name="LMExecutor-uni">
-        <java classname="evaluation.LMExecutor" failonerror="true" fork="yes">
-            <arg line="/work/research/onsets/dat/unilm2/ /work/research/onsets/dat/unilmr/ 0.348430 -4.755211"/>
-            <classpath refid="SurprisalModel.classpath"/>
-        </java>
-    </target>
-    <target name="LMExecutor-length">
-        <java classname="evaluation.LMExecutor" failonerror="true" fork="yes">
-            <arg line="/work/research/onsets/dat/lengthlm2/ /work/research/onsets/dat/lengthlmr2/ 0.3026121 0.0044138"/>
-            <classpath refid="SurprisalModel.classpath"/>
-        </java>
-    </target>
-    <target name="LMExecutor-act">
-        <java classname="evaluation.LMExecutor" failonerror="true" fork="yes">
-            <arg line="/work/research/onsets/dat/sentopt/ /work/research/onsets/dat/sentoptr/ 0.654882 0.021344"/>
-            <classpath refid="SurprisalModel.classpath"/>
-        </java>
-    </target>
-    <target name="WordDurationExecutor">
-        <java classname="durations.WordDurationExecutor" failonerror="true" fork="yes">
-            <arg line="/work/research/onsets/dat/onsets/ /work/research/onsets/dat/durations/"/>
-            <classpath refid="SurprisalModel.classpath"/>
-        </java>
-    </target>
-    <target name="SentenceExecutorDur">
-        <java classname="actdelay.SentenceExecutorDur" failonerror="true" fork="yes">
-            <jvmarg line="-Xmx10g"/>
-            <arg line="-n 5 /work/research/onsets/dat/onsets/ /work/research/onsets/dat/multidelays15/ /work/research/onsets/dat/durations/durations-0.txt /work/research/onsets/dat/sentences.lm /work/research/onsets/dat/pmi-r/ 15"/>
-            <classpath refid="SurprisalModel.classpath"/>
-        </java>
-    </target>
-    <target name="TimeWindowExecutor">
-        <java classname="timewindow.TimeWindowExecutor" failonerror="true" fork="yes">
-            <arg line="-n 5 /work/research/onsets/dat/onsets2/ /work/research/onsets/dat/windows0.2/ 0.2"/>
-            <classpath refid="SurprisalModel.classpath"/>
-        </java>
-    </target>
-    <target name="ActWindowExecutor">
-        <java classname="timewindow.ActWindowExecutor" failonerror="true" fork="yes">
-            <arg line="-n 5 /work/research/onsets/dat/windows0.2/ /work/research/onsets/dat/timewindows25-sample/ /work/research/onsets/dat/durations/durations-0.txt /work/research/onsets/dat/sentences.lm /work/research/onsets/dat/pmi-r/ 25 0.2"/>
-            <classpath refid="SurprisalModel.classpath"/>
+    <target name="ModelExecutor">
+        <java classname="model.ModelExecutor" failonerror="true" fork="yes">
+            <jvmarg line="-Xmx12g"/>
+            <arg line="-n 1 /work/research/onsets/dat/onsets/ /work/research/onsets/dat/modeldata-incr/ /work/research/onsets/dat/sentences.lm /work/research/onsets/dat/pmi-r/ /work/research/onsets/dat/closed_words.list"/>
+            <classpath refid="WorkingMemory.classpath"/>
         </java>
     </target>
 </project>

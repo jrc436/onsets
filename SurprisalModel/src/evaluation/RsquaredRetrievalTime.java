@@ -1,7 +1,7 @@
 package evaluation;
 
 import actdelay.ActDelay;
-import actr.SuccessfulRetrievalModel;
+import dm.SuccessfulRetrievalModel;
 import optimizers.DoublePair;
 import optimizers.RsquaredEvaluator;
 import optimizers.VariableName;

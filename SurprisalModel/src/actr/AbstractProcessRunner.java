@@ -6,8 +6,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 
+import dm.BaseWordActivationComputer;
+import dm.DeclarativeMemory;
 import ngrams.UnigramModel;
 import nlp.pmi.PMIDict;
+import wm.PMISpreadAct;
+import wm.TracerWorkingMemory;
 
 public abstract class AbstractProcessRunner<F, K> {
 	private final int numPrev;
@@ -35,7 +39,7 @@ public abstract class AbstractProcessRunner<F, K> {
 		this.previousTimes = new LinkedList<Double>();
 	}
 	public List<K> realizeSentence(F sentence) {
-		DeclarativeMemory dm = new DeclarativeMemory(k, negD, base, pmi);
+		DeclarativeMemory dm = new DeclarativeMemory(k, negD, base, new PMISpreadAct(pmi), new TracerWorkingMemory());
 		initializePreviousTimes();
 		return realizeSentenceCritical(sentence, dm);
 	}

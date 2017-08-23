@@ -10,6 +10,7 @@ import actdelay.ActDelayDur;
 import data.DelayEvent;
 import data.DelayWord;
 import data.WordStream;
+import dm.DeclarativeMemory;
 import ngrams.UnigramModel;
 import nlp.pmi.PMIDict;
 
@@ -28,7 +29,7 @@ public class WordStreamRunner extends AbstractProcessRunner<WordStream, ActDelay
 			DelayEvent delay = delays.next();
 			if (delay instanceof DelayWord) {
 				DelayWord dw = (DelayWord) delay;
-				double act = nGramPresentations.present(dw.getWord(), totalTime());
+				double act = nGramPresentations.present(dw.getWord());
 				ActDelay ad = new ActDelay(act, dw.getDelay());
 				double diff = dw.getDelay();
 				double dur = super.getWordDuration(dw.getWord());
@@ -40,12 +41,12 @@ public class WordStreamRunner extends AbstractProcessRunner<WordStream, ActDelay
 				actDelays.add(new ActDelayDur(ad, super.getPrevious(), prevword));
 			}
 			else {
-				nGramPresentations.addDelayEventToWM();
+				//nGramPresentations.addDelayEventToWM();
 				super.addPrevious(0.0);
 				prevword = "disfluency";
 			}
 			elapseTime(delay.getElapsedTime());
-			nGramPresentations.decayPresentations(delay.getElapsedTime());
+			nGramPresentations.step(delay.getElapsedTime());
 		}
 		return actDelays;
 	}
