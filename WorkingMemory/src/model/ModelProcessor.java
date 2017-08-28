@@ -84,7 +84,7 @@ public class ModelProcessor extends LineProcessor<Sentence, ModelData> {
 	@Override
 	public void map(Sentence newData, ModelData threadAggregate) {
 		AbstractWorkingMemory wm = new IncrementalWM(windowSize, k);
-		PrevWordMem pm = new PrevWordMem(windowSize, k);
+		PrevWordMem pm = new PrevWordMem(windowSize, 1);
 		DeclarativeMemory dm = new DeclarativeMemory(k, negD, bwac, pmis, wm);
 		wm.setDM(dm);
 		wm.initialize(newData);

@@ -38,11 +38,12 @@ public class WordEvent {
 		if (!(other instanceof WordEvent)) {
 			return false;
 		}
-		return this.word.equals(((WordEvent)other).word);
+		WordEvent otherWE = (WordEvent)other;
+		return this.word.equals(otherWE.word) && this.duration == otherWE.duration && this.onset == otherWE.onset; 
 	}
 	@Override
 	public int hashCode() {
-		return word.hashCode();
+		return word.hashCode() + (int) Math.round(this.duration * this.onset);
 	}
 	public String getWord() {
 		return word;

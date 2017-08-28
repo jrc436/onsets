@@ -24,13 +24,13 @@ public class LowActivationWM extends AbstractWorkingMemory {
 		}
 		return toRetrieve;
 	}
-	@Override
-	public boolean step(WordEvent add) {
-		boolean ret = super.step(add);
-		if (ret) {
-			dm.present(add.getWord());
-		}
-		return ret;
-	}
+//	@Override
+//	public boolean step(WordEvent add, double timeStep) {
+//		boolean ret = super.step(add);
+//		if (ret) {
+//			dm.present(add.getWord());
+//		}
+//		return ret;
+//	}
 
 }

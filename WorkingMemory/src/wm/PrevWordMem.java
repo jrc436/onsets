@@ -22,16 +22,14 @@ public class PrevWordMem extends BaseWorkingMemory {
 		return true;
 	}
 	public String toString() {
-//		String toReturn = "";
-//		for (String word : contents) {
-//			toReturn += word + ",";
-//		}
-//		return toReturn.substring(0, toReturn.length()-1);
 		String toReturn = "";
-		if (currentContents.size() > 0) {
-			toReturn = this.currentContents.get(currentContents.size()-1);
+		if (currentContents.isEmpty()) {
+			return toReturn;
 		}
-		return toReturn;
+		for (String word : currentContents) {
+			toReturn += word + ",";
+		}
+		return toReturn.substring(0, toReturn.length()-1);
 	}
 
 }

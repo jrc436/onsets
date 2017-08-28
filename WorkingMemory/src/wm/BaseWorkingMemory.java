@@ -26,7 +26,8 @@ public abstract class BaseWorkingMemory implements IWorkingMemory {
 	public Iterator<String> getMemoryContents() {
 		return currentContents.iterator();
 	}
-	public abstract boolean step(WordEvent realizedWord);
+	// Returns whether or not the nextWord has been realized
+	public abstract boolean step(WordEvent nextWord);
 	public String toString() {
 		String toReturn = "";
 		for (String word : currentContents) {
