@@ -7,4 +7,6 @@ mutual information.
 This code is not necessarily designed for public use, but to document the process which produced a paper. The paper can be found below.
 Please email me at jrcole@psu.edu if you have any questions.
 
+This work was accepted to NAACL 2018! Updated link coming soon.
+
 https://psyarxiv.com/tmxdf/
