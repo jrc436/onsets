@@ -10,4 +10,14 @@ This code is for modelling speech rates and pauses within the context of the ide
 associated with the following paper. The goal of the paper was to determine the effect of a word's activation, which is related to 
 its retrieval time, on fluent speech.
 
+This project consists of research code designed to model speech rates as a function of lexical memory retrieval. In particular, the goal
+is to continuously model the activation of each target word, and investigate how that influences speech rate at that moment. Computing
+the activation for each word continuously relies on the time-annotated version of the Switchboard corpus, ngram counts, and pointwise
+mutual information. 
+
+This code is not necessarily designed for public use, but to document the process which produced a paper. The paper can be found below.
+Please email me at jrcole@psu.edu if you have any questions.
+
+This work was accepted to NAACL 2018! Updated link coming soon.
+
 https://psyarxiv.com/tmxdf/
