@@ -5,31 +5,35 @@
               directory with the processing instruction <?eclipse.ant.import?>
               as the first entry and export the buildfile again. --><project basedir="." default="build" name="WorkingMemory">
     <property environment="env"/>
+    <property name="JRE_LIB" value="../../../../usr/lib/jvm/java-1.8.0-openjdk-1.8.0.121-0.b13.el7_3.x86_64/jre/lib/rt.jar"/>
     <property name="ECLIPSE_HOME" value="../../../../opt/eclipse/"/>
-    <property name="Executors.location" value="../../executors"/>
+    <property name="Executors.location" value="../../executors/Executors"/>
     <property name="ACTR.location" value="../../actr/ACTR"/>
     <property name="debuglevel" value="source,lines,vars"/>
     <property name="target" value="1.8"/>
     <property name="source" value="1.8"/>
+    <path id="work/research/executors/bin.libraryclasspath"/>
     <path id="Executors.classpath">
         <pathelement location="${Executors.location}/bin"/>
-        <pathelement location="${Executors.location}/lib/ejml.jar"/>
-        <pathelement location="${Executors.location}/lib/ejml.src.zip"/>
-        <pathelement location="${Executors.location}/lib/javax.json.jar"/>
-        <pathelement location="${Executors.location}/lib/javax.json.src.jar"/>
-        <pathelement location="${Executors.location}/lib/joda-time.jar"/>
-        <pathelement location="${Executors.location}/lib/joda-time.src.jar"/>
-        <pathelement location="${Executors.location}/lib/jollyday.jar"/>
-        <pathelement location="${Executors.location}/lib/jollyday.src.jar"/>
-        <pathelement location="${Executors.location}/lib/protobuf.jar"/>
-        <pathelement location="${Executors.location}/lib/slf4j-api.jar"/>
-        <pathelement location="${Executors.location}/lib/slf4j-simple.jar"/>
-        <pathelement location="${Executors.location}/lib/stanford.corenlp.jar"/>
-        <pathelement location="${Executors.location}/lib/stanford.corenlp.javadoc.jar"/>
-        <pathelement location="${Executors.location}/lib/stanford.corenlp.models.jar"/>
-        <pathelement location="${Executors.location}/lib/stanford.corenlp.src.jar"/>
-        <pathelement location="${Executors.location}/lib/xom.jar"/>
-        <pathelement location="${Executors.location}/lib/xom.src.jar"/>
+        <pathelement location="${JRE_LIB}"/>
+        <path refid="work/research/executors/bin.libraryclasspath"/>
+        <pathelement location="${Executors.location}/../lib/ejml.jar"/>
+        <pathelement location="${Executors.location}/../lib/ejml.src.zip"/>
+        <pathelement location="${Executors.location}/../lib/javax.json.jar"/>
+        <pathelement location="${Executors.location}/../lib/javax.json.src.jar"/>
+        <pathelement location="${Executors.location}/../lib/joda-time.jar"/>
+        <pathelement location="${Executors.location}/../lib/joda-time.src.jar"/>
+        <pathelement location="${Executors.location}/../lib/jollyday.jar"/>
+        <pathelement location="${Executors.location}/../lib/jollyday.src.jar"/>
+        <pathelement location="${Executors.location}/../lib/protobuf.jar"/>
+        <pathelement location="${Executors.location}/../lib/slf4j-api.jar"/>
+        <pathelement location="${Executors.location}/../lib/slf4j-simple.jar"/>
+        <pathelement location="${Executors.location}/../lib/stanford.corenlp.jar"/>
+        <pathelement location="${Executors.location}/../lib/stanford.corenlp.javadoc.jar"/>
+        <pathelement location="${Executors.location}/../lib/stanford.corenlp.models.jar"/>
+        <pathelement location="${Executors.location}/../lib/stanford.corenlp.src.jar"/>
+        <pathelement location="${Executors.location}/../lib/xom.jar"/>
+        <pathelement location="${Executors.location}/../lib/xom.src.jar"/>
     </path>
     <path id="ACTR.classpath">
         <pathelement location="${ACTR.location}/bin"/>
@@ -44,7 +48,6 @@
         <mkdir dir="bin"/>
         <copy includeemptydirs="false" todir="bin">
             <fileset dir="src">
-                <exclude name="**/*.launch"/>
                 <exclude name="**/*.java"/>
             </fileset>
         </copy>
