@@ -18,7 +18,6 @@ import util.sys.LineProcessor;
 import wm.AbstractWorkingMemory;
 import wm.PMISpreadAct;
 import wm.PrevWordMem;
-import wm.TimingWM;
 
 public class ModelProcessor extends LineProcessor<Sentence, ModelData> {
 	private final Set<String> closedClassWords;
@@ -27,13 +26,15 @@ public class ModelProcessor extends LineProcessor<Sentence, ModelData> {
 	private static final int windowSize = 5;
 	private final PMISpreadAct pmis;
 	private final BaseWordActivationComputer bwac;
-	
+	private final MemoryFactory memFac;
 	public ModelProcessor() {
 		super();
 		this.closedClassWords = null;
 		this.pmis = null;
 		this.bwac = null;
+		this.memFac = null;
 	}
+	@SuppressWarnings("unchecked")
 	public ModelProcessor(String inpDir, String outDir, String[] paths) { 
 		super(inpDir, outDir, new ModelData());
 		String pathToClosed = paths[2];
@@ -44,6 +45,11 @@ public class ModelProcessor extends LineProcessor<Sentence, ModelData> {
 		pmi = DictReformatter.readOversizeDict(pathToPMI); 
 		this.pmis = new PMISpreadAct(pmi);
 		this.bwac = new BaseWordActivationComputer(k, UnigramModel.readFile(Paths.get(pathToUni)));
+		try {
+			this.memFac = new MemoryFactory((Class<? extends AbstractWorkingMemory>) Class.forName(paths[3].trim()));
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Failed to create Memory Factory from class: "+paths[3]);
+		}
 	}
 	private static Set<String> readFile(String path)  {
 		List<String> lines = null;
@@ -63,7 +69,7 @@ public class ModelProcessor extends LineProcessor<Sentence, ModelData> {
 	}
 	@Override
 	public int getNumFixedArgs() {
-		return 3;
+		return 4;
 	}
 	@Override
 	public boolean hasNArgs() {
@@ -71,7 +77,7 @@ public class ModelProcessor extends LineProcessor<Sentence, ModelData> {
 	}
 	@Override
 	public String getConstructionErrorMsg() {
-		return "needs the path to the closed set words, the path to the pmi dict, and the path to the unigram model";
+		return "needs the path to the closed set words, the path to the pmi dict, and the path to the unigram model, and the memory path";
 	}
 	@Override
 	public Sentence getNextData() {
@@ -83,7 +89,7 @@ public class ModelProcessor extends LineProcessor<Sentence, ModelData> {
 	}
 	@Override
 	public void map(Sentence newData, ModelData threadAggregate) {
-		AbstractWorkingMemory wm = new TimingWM(windowSize, k);
+		AbstractWorkingMemory wm = memFac.produce(windowSize, k);
 		PrevWordMem pm = new PrevWordMem(windowSize, 1);
 		DeclarativeMemory dm = new DeclarativeMemory(k, negD, bwac, pmis, wm);
 		wm.setDM(dm);
