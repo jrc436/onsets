@@ -20,4 +20,6 @@ Please email me at jrcole@psu.edu if you have any questions.
 
 This work was accepted to NAACL 2018! Updated link coming soon.
 
+This branch has ongoing work! The branch lexret is the exact code for the NAACL paper
+
 https://psyarxiv.com/tmxdf/
