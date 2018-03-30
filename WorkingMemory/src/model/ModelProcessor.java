@@ -16,9 +16,9 @@ import nlp.pmi.PMIDict;
 import sentence.Sentence;
 import util.sys.LineProcessor;
 import wm.AbstractWorkingMemory;
-import wm.IncrementalWM;
 import wm.PMISpreadAct;
 import wm.PrevWordMem;
+import wm.TimingWM;
 
 public class ModelProcessor extends LineProcessor<Sentence, ModelData> {
 	private final Set<String> closedClassWords;
@@ -83,7 +83,7 @@ public class ModelProcessor extends LineProcessor<Sentence, ModelData> {
 	}
 	@Override
 	public void map(Sentence newData, ModelData threadAggregate) {
-		AbstractWorkingMemory wm = new IncrementalWM(windowSize, k);
+		AbstractWorkingMemory wm = new TimingWM(windowSize, k);
 		PrevWordMem pm = new PrevWordMem(windowSize, 1);
 		DeclarativeMemory dm = new DeclarativeMemory(k, negD, bwac, pmis, wm);
 		wm.setDM(dm);

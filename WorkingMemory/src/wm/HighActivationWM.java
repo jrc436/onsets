@@ -7,16 +7,16 @@ import java.util.Set;
 
 import sentence.WordEvent;
 
-public class LowActivationWM extends AbstractWorkingMemory {
+public class HighActivationWM extends AbstractWorkingMemory {
 	
 	
-	public LowActivationWM(int windowSize, int k) {
+	public HighActivationWM(int windowSize, int k) {
 		super(windowSize, k);
 	}
 
 	@Override
 	public WordEvent getNextRetrieval(List<WordEvent> leftToRealize) {
-		double minAct = Double.MAX_VALUE;
+		double maxAct = 0;
 		WordEvent toRetrieve = null;
 		Iterator<String> contents = this.getMemoryContents();
 		Set<String> contains = new HashSet<String>();
@@ -28,11 +28,12 @@ public class LowActivationWM extends AbstractWorkingMemory {
 			if (contains.contains(we.getWord())) {
 				continue;
 			}
-			if (act < minAct) {
-				minAct = act;
+			if (act > maxAct) {
+				maxAct = act;
 				toRetrieve = we;
 			}
 		}
 		return toRetrieve;
 	}
 }
+

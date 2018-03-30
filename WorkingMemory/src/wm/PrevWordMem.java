@@ -16,7 +16,7 @@ public class PrevWordMem extends BaseWorkingMemory {
 		currentContents.add(word);
 	}
 
-	@Override
+	//@Override
 	public boolean step(WordEvent realizedWord) {
 		this.addWord(realizedWord.getWord());
 		return true;

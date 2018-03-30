@@ -1,5 +1,6 @@
 package model;
 
+import optimizers.DoublePair;
 import sentence.Sentence;
 import sentence.WordEvent;
 import wm.AbstractWorkingMemory;
@@ -26,22 +27,23 @@ public class TracerModel implements IModel {
 	}
 	// 50 ms, the common time step of an ACT-R model
 	protected double getTimeStep() {
-		return 0.05;
+		return 0.001;
 	}
 	
 	@Override
 	public void step() {
-		wm.startRetrieval(s);
-		WordEvent we = s.getNextWord();
-		ModelState toAdd = new ModelState(wm.toString(), pm.toString(), we.getWord(), wm.getElapsedTime());
 		// A word was spoken!
-		if (wm.step(we)) {
-			md.add(toAdd);
+		WordEvent spokenWord = wm.step(s, getTimeStep()); 
+		if (spokenWord != null) {
+			md.add(new ModelStateTime(wm.toString(), spokenWord.getWord(), 
+					new DoublePair(wm.getLastObsOnset(), wm.getTotalElapsedTime()), // observed is 
+					new DoublePair(wm.getLastExpOnset(), spokenWord.getOnset())));
 			s.speakWord();
-			System.out.println(we);
+			pm.step(spokenWord);
+			wm.setLastOnsets(spokenWord);
 		}
 		// No further processing is needed. We'll just use this step to move forward the memory pointer to the next retrieval.
-		pm.step(we);
+		
 		
 	}
 

@@ -3,7 +3,7 @@ package model;
 import util.generic.data.GenericList;
 import util.sys.DataType;
 
-public class ModelData extends GenericList<ModelState> {
+public class ModelData extends GenericList<ModelStateTime> {
 
 	private static final long serialVersionUID = -7976721655685605174L;
 

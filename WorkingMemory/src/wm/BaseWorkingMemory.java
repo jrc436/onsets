@@ -22,6 +22,9 @@ public abstract class BaseWorkingMemory implements IWorkingMemory {
 	public int getSize() {
 		return currentContents.size();
 	}
+	public boolean isFull() {
+		return getSize() == k;
+	}
 	@Override
 	public Iterator<String> getMemoryContents() {
 		return currentContents.iterator();
