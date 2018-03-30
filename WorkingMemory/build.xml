@@ -48,6 +48,7 @@
         <mkdir dir="bin"/>
         <copy includeemptydirs="false" todir="bin">
             <fileset dir="src">
+                <exclude name="**/*.launch"/>
                 <exclude name="**/*.java"/>
             </fileset>
         </copy>
@@ -96,7 +97,7 @@
     <target name="ModelExecutor">
         <java classname="model.ModelExecutor" failonerror="true" fork="yes">
             <jvmarg line="-Xmx12g"/>
-            <arg line="-n 1 /work/research/onsets/dat/onsets/ /work/research/onsets/dat/timediff-opt/ /work/research/onsets/dat/sentences.lm /work/research/onsets/dat/pmi-r/ /work/research/onsets/dat/closed_words.list"/>
+            <arg line="-n 1 /work/research/onsets/dat/onsets/ /work/research/onsets/dat/timediff-high/ /work/research/onsets/dat/sentences.lm /work/research/onsets/dat/pmi-r/ /work/research/onsets/dat/closed_words.list wm.HighActivationWM"/>
             <classpath refid="WorkingMemory.classpath"/>
         </java>
     </target>
