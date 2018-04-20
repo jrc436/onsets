@@ -10,10 +10,10 @@ public class PrevWordMem extends BaseWorkingMemory {
 	}
 
 	private void addWord(String word) {
-		if (currentContents.size() == k) {
-			currentContents.remove(0);
+		if (wmContents.size() == k) {
+			wmContents.remove(0);
 		}
-		currentContents.add(word);
+		wmContents.add(word);
 	}
 
 	//@Override
@@ -23,10 +23,10 @@ public class PrevWordMem extends BaseWorkingMemory {
 	}
 	public String toString() {
 		String toReturn = "";
-		if (currentContents.isEmpty()) {
+		if (wmContents.isEmpty()) {
 			return toReturn;
 		}
-		for (String word : currentContents) {
+		for (String word : wmContents) {
 			toReturn += word + ",";
 		}
 		return toReturn.substring(0, toReturn.length()-1);

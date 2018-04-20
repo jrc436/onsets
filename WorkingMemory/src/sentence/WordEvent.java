@@ -30,9 +30,6 @@ public class WordEvent {
 		//closedClass.contains(wordPart);
 		return new WordEvent(wordPart, startTime, endTime - startTime, isClosed);
 	}
-	public WordEvent changeOnset(double onset) {
-		return new WordEvent(this.word, onset, this.duration, this.isClosed);
-	}
 	public String toString() {
 		return word;
 	}

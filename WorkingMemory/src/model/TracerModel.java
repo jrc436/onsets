@@ -33,12 +33,12 @@ public class TracerModel implements IModel {
 	@Override
 	public void step() {
 		// A word was spoken!
-		WordEvent spokenWord = wm.step(s, getTimeStep()); 
+		WordEvent spokenWord = wm.timeStep(s, getTimeStep()); 
 		if (spokenWord != null) {
 			md.add(new ModelStateTime(wm.toString(), spokenWord.getWord(), 
 					new DoublePair(wm.getLastObsOnset(), wm.getTotalElapsedTime()), // observed is 
 					new DoublePair(wm.getLastExpOnset(), spokenWord.getOnset())));
-			s.speakWord();
+			//s.speakWord();
 			pm.step(spokenWord);
 			wm.setLastOnsets(spokenWord);
 		}

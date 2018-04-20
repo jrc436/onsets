@@ -6,12 +6,12 @@ import java.util.Iterator;
 import sentence.WordEvent;
 
 public abstract class BaseWorkingMemory implements IWorkingMemory {
-	protected final ArrayList<String> currentContents; // Can be thought of Goal Buffer in ACT-R
+	protected final ArrayList<String> wmContents; // Can be thought of Goal Buffer in ACT-R
 	private final int windowSize;
 	protected final int k;
 	
 	public BaseWorkingMemory(int windowSize, int k) {
-		currentContents = new ArrayList<String>();
+		wmContents = new ArrayList<String>();
 		this.windowSize = windowSize;
 		this.k = k;
 	}
@@ -20,23 +20,23 @@ public abstract class BaseWorkingMemory implements IWorkingMemory {
 	}
 	@Override
 	public int getSize() {
-		return currentContents.size();
+		return wmContents.size();
 	}
 	public boolean isFull() {
 		return getSize() == k;
 	}
 	@Override
 	public Iterator<String> getMemoryContents() {
-		return currentContents.iterator();
+		return wmContents.iterator();
 	}
 	// Returns whether or not the nextWord has been realized
 	public abstract boolean step(WordEvent nextWord);
 	public String toString() {
 		String toReturn = "";
-		for (String word : currentContents) {
+		for (String word : wmContents) {
 			toReturn += word + ",";
 		}
-		if (currentContents.size() > 0) {
+		if (wmContents.size() > 0) {
 			toReturn = toReturn.substring(0, toReturn.length()-1);
 		}
 		return toReturn;
