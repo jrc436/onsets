@@ -26,11 +26,10 @@ public class RandomWM extends AbstractWorkingMemory {
 			contains.add(contents.next());
 		}
 		for (WordEvent we : leftToRealize) {
-			double act = dm.present(we.getWord(), true);
-			if (contains.contains(toRetrieve.getWord())) {
+			if (contains.contains(we.getWord())) {
 				continue; // just parallelism
 			}
-			randomSelect.add(toRetrieve);
+			randomSelect.add(we);
 		}
 		if (!randomSelect.isEmpty()) {
 			toRetrieve = randomSelect.get(r.nextInt(randomSelect.size()));

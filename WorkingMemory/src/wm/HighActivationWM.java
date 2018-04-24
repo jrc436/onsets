@@ -24,7 +24,6 @@ public class HighActivationWM extends AbstractWorkingMemory {
 			contains.add(contents.next());
 		}
 		for (WordEvent we : leftToRealize) {
-			double act = dm.present(we.getWord(), true);
 			if (contains.contains(we.getWord())) {
 				continue;
 			}

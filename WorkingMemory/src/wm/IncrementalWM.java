@@ -15,7 +15,6 @@ public class IncrementalWM extends AbstractWorkingMemory {
 	public WordEvent getNextRetrieval(List<WordEvent> choices) {
 		Iterator<String> contents = this.getMemoryContents();
 		for (WordEvent s : choices) {
-			dm.present(s.getWord(), true);
 			//just choose the first one we haven't already retrieved
 			if (!contents.hasNext() || !contents.next().equals(s.getWord())) {
 				return s;
