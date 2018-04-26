@@ -3,7 +3,7 @@ package wm;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import sentence.WordEvent;
+import input.WordEvent;
 
 public abstract class BaseWorkingMemory implements IWorkingMemory {
 	protected final ArrayList<String> wmContents; // Can be thought of Goal Buffer in ACT-R

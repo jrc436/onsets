@@ -1,8 +1,8 @@
 package model;
 
+import input.WordEvent;
 import optimizers.DoublePair;
 import sentence.Sentence;
-import sentence.WordEvent;
 import wm.AbstractWorkingMemory;
 import wm.PrevWordMem;
 

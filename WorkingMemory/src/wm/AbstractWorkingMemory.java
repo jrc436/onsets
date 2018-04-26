@@ -1,9 +1,9 @@
 package wm;
 
 import dm.DeclarativeMemory;
+import input.WordEvent;
 import sentence.BufferProcess;
 import sentence.Sentence;
-import sentence.WordEvent;
 import strategy.IStrategy;
 import util.collections.OrderedPair;
 import util.collections.Pair;

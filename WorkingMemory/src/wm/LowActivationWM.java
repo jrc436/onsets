@@ -5,7 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import sentence.WordEvent;
+import input.WordEvent;
 
 public class LowActivationWM extends AbstractWorkingMemory {
 	
@@ -16,23 +16,17 @@ public class LowActivationWM extends AbstractWorkingMemory {
 
 	@Override
 	public WordEvent getNextRetrieval(List<WordEvent> leftToRealize) {
-		double minAct = Double.MAX_VALUE;
-		WordEvent toRetrieve = null;
 		Iterator<String> contents = this.getMemoryContents();
 		Set<String> contains = new HashSet<String>();
 		while (contents.hasNext()) {
 			contains.add(contents.next());
 		}
-		for (WordEvent we : leftToRealize) {
-			double act = dm.present(we.getWord(), true);
-			if (contains.contains(we.getWord())) {
-				continue;
-			}
-			if (act < minAct) {
-				minAct = act;
-				toRetrieve = we;
-			}
+		List<WordEvent> sortedByActivation = dm.getMostActivated(leftToRealize);
+		int i = 0;
+		// least activated are at the start
+		while (contains.contains(sortedByActivation.get(i))) {
+			i++;
 		}
-		return toRetrieve;
+		return sortedByActivation.get(i);
 	}
 }

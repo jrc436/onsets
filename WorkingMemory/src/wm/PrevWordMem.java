@@ -1,6 +1,6 @@
 package wm;
 
-import sentence.WordEvent;
+import input.WordEvent;
 
 public class PrevWordMem extends BaseWorkingMemory {
 

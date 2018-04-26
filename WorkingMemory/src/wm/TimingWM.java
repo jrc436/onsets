@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 import dm.SuccessfulRetrievalModel;
-import sentence.WordEvent;
+import input.WordEvent;
 
 public class TimingWM extends AbstractWorkingMemory {
 	private final SuccessfulRetrievalModel m;

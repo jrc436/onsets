@@ -3,7 +3,7 @@ package wm;
 import java.util.Iterator;
 import java.util.List;
 
-import sentence.WordEvent;
+import input.WordEvent;
 
 public class IncrementalWM extends AbstractWorkingMemory {
 

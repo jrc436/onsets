@@ -1,5 +1,6 @@
 package sentence;
 
+import input.WordEvent;
 import util.collections.Pair;
 
 public class BufferProcess {

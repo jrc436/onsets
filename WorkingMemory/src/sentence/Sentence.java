@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Queue;
 import java.util.Set;
 
+import input.WordEvent;
 import util.sys.DataType;
 import util.sys.FileWritable;
 

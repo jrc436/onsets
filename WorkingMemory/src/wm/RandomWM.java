@@ -3,11 +3,12 @@ package wm;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Set;
+
+import input.WordEvent;
+
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Iterator;
-
-import sentence.WordEvent;
 
 public class RandomWM extends AbstractWorkingMemory {
 	private final Random r;
@@ -26,8 +27,7 @@ public class RandomWM extends AbstractWorkingMemory {
 			contains.add(contents.next());
 		}
 		for (WordEvent we : leftToRealize) {
-			double act = dm.present(we.getWord(), true);
-			if (contains.contains(toRetrieve.getWord())) {
+			if (contains.contains(we.getWord())) {
 				continue; // just parallelism
 			}
 			randomSelect.add(toRetrieve);
