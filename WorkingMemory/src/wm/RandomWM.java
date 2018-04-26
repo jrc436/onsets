@@ -30,7 +30,7 @@ public class RandomWM extends AbstractWorkingMemory {
 			if (contains.contains(we.getWord())) {
 				continue; // just parallelism
 			}
-			randomSelect.add(toRetrieve);
+			randomSelect.add(we);
 		}
 		if (!randomSelect.isEmpty()) {
 			toRetrieve = randomSelect.get(r.nextInt(randomSelect.size()));

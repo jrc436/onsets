@@ -5,14 +5,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import dm.SuccessfulRetrievalModel;
 import input.WordEvent;
 
 public class TimingWM extends AbstractWorkingMemory {
-	private final SuccessfulRetrievalModel m;
 	public TimingWM(int windowSize, int k) {
 		super(windowSize, k);
-		this.m = new SuccessfulRetrievalModel();
 	}
 
 	@Override
@@ -27,11 +24,10 @@ public class TimingWM extends AbstractWorkingMemory {
 			contains.add(contents.next());
 		}
 		for (WordEvent we : leftToRealize) {
-			double act = dm.present(we.getWord(), true);
 			if (contains.contains(we.getWord())) {
 				continue;
 			}
-			double expectedRetrievalTime = m.getRetrievalTime(act);
+			double expectedRetrievalTime = dm.directRetrieval(we.getWord(), true);
 			// how to figure out now time!
 			double wastedTime = we.getOnset() - (this.getElapsedTime() + expectedRetrievalTime);
 			if (wastedTime < minWastedTime) {

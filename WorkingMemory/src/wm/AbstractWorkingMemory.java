@@ -45,7 +45,7 @@ public abstract class AbstractWorkingMemory extends BaseWorkingMemory implements
 		// Begin the next retrieval, if any exist
 		WordEvent next = this.getNextRetrieval(s.getRetrievableWords(getWindowSize()));
 		if (next != null) {
-			double rt = dm.directRetrieval(next.getWord());
+			double rt = dm.directRetrieval(next.getWord(), true);
 			return new OrderedPair<WordEvent, Double>(next, rt);
 		}
 		return null;
@@ -61,7 +61,7 @@ public abstract class AbstractWorkingMemory extends BaseWorkingMemory implements
 				wmContents.remove(nextWord.getWord()); // done with it
 			}
 			// if it's closed it can be spoken without entering memory, and has no effect on memory. 
-						// this represents a "proceduralized" word
+			// this represents a "proceduralized" word
 			else if (!nextWord.isClosed()){
 				return null;
 			}
@@ -109,21 +109,6 @@ public abstract class AbstractWorkingMemory extends BaseWorkingMemory implements
 		}
 		elapseTime(timeStep);
 		return toReturn;
-//		retrievalBuffer.processIfFinished(sentence);
-//		WordEvent event = sentence.getNextWord();
-//		WordEvent toReturn = getTotalElapsedTime() > event.getOnset() ? event : null; // hacky lhs, still needs to be updated
-//		if (toReturn != null && !event.isClosed()) {
-//			if (!wmContents.contains(event.getWord())) {
-//				toReturn = null; // still waiting to retrieve 
-//				//throw new RuntimeException(toReturn + " is not in workingMemory: "+currentContents+" or a closed class word");
-//			}
-//			else {
-//				dm.present(toReturn.getWord());
-//				wmContents.remove(toReturn.getWord()); // rhs
-//			}
-//		}
-//		elapseTime(timeStep);
-//		return toReturn;
 	}
 	public WordEvent timeStep(Sentence sentence, double timeStep) {
 		retrievalBuffer.processIfFinished(sentence);
